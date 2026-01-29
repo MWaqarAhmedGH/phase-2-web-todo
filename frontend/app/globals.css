@@ -1,8 +1,26 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Vibrant Primary colors */
+  --primary-1: #6366f1;
+  --primary-2: #8b5cf6;
+  --primary-3: #a855f7;
+  --primary-4: #d946ef;
+  --primary-5: #ec4899;
+
+  /* Neon accents */
+  --neon-blue: #00d4ff;
+  --neon-purple: #bf00ff;
+  --neon-pink: #ff006e;
+  --neon-green: #00ff88;
+  --neon-orange: #ff9500;
+  --neon-yellow: #ffea00;
+
+  /* Background */
+  --background: #0f0f23;
+  --foreground: #ffffff;
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --card-border: rgba(255, 255, 255, 0.1);
 }
 
 @theme inline {
@@ -12,15 +30,727 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ========================================
+   3D BACKGROUNDS & EFFECTS
+   ======================================== */
+
+/* Cosmic gradient background */
+.bg-cosmic {
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(120, 0, 255, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(255, 0, 128, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 40% 40%, rgba(0, 212, 255, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 60%, rgba(0, 255, 136, 0.15) 0%, transparent 50%),
+    linear-gradient(135deg, #0f0f23 0%, #1a1a3e 50%, #0f0f23 100%);
+  background-attachment: fixed;
+}
+
+/* Animated mesh gradient */
+.bg-mesh-animated {
+  background:
+    linear-gradient(45deg, #12c2e9, #c471ed, #f64f59);
+  background-size: 400% 400%;
+  animation: mesh-flow 8s ease infinite;
+}
+
+@keyframes mesh-flow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Aurora effect */
+.bg-aurora {
+  position: relative;
+  overflow: hidden;
+}
+
+.bg-aurora::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background:
+    conic-gradient(from 0deg at 50% 50%,
+      #ff006e 0deg,
+      #8b5cf6 60deg,
+      #00d4ff 120deg,
+      #00ff88 180deg,
+      #ffea00 240deg,
+      #ff006e 300deg,
+      #ff006e 360deg);
+  animation: aurora-spin 20s linear infinite;
+  opacity: 0.15;
+  filter: blur(60px);
+}
+
+@keyframes aurora-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ========================================
+   3D CARDS & CONTAINERS
+   ======================================== */
+
+/* 3D Glass card with depth */
+.card-3d {
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+    0 -20px 40px -20px rgba(255, 255, 255, 0.1) inset;
+  transform-style: preserve-3d;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.card-3d:hover {
+  transform: translateY(-10px) rotateX(5deg) rotateY(-5deg);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+    0 0 80px rgba(139, 92, 246, 0.3);
+}
+
+/* Floating 3D card */
+.card-float {
+  animation: float-3d 6s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+@keyframes float-3d {
+  0%, 100% {
+    transform: translateY(0) rotateX(0deg) rotateY(0deg);
+  }
+  25% {
+    transform: translateY(-10px) rotateX(2deg) rotateY(2deg);
+  }
+  50% {
+    transform: translateY(-5px) rotateX(0deg) rotateY(-2deg);
+  }
+  75% {
+    transform: translateY(-15px) rotateX(-2deg) rotateY(1deg);
+  }
+}
+
+/* Neumorphic 3D effect (light version) */
+.neu-3d {
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  box-shadow:
+    20px 20px 60px #bebebe,
+    -20px -20px 60px #ffffff,
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+}
+
+/* Dark neumorphic */
+.neu-3d-dark {
+  background: linear-gradient(145deg, #1e1e3f, #151530);
+  box-shadow:
+    20px 20px 60px rgba(0, 0, 0, 0.5),
+    -20px -20px 60px rgba(50, 50, 100, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+}
+
+/* ========================================
+   3D BUTTONS
+   ======================================== */
+
+/* 3D Push button */
+.btn-3d {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 32px;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transform: perspective(500px) translateZ(0);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow:
+    0 10px 20px -10px rgba(99, 102, 241, 0.5),
+    0 6px 0 0 #4f46e5,
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2);
+}
+
+.btn-3d::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    transparent 50%);
+  pointer-events: none;
+}
+
+.btn-3d:hover {
+  transform: perspective(500px) translateZ(10px) translateY(-4px);
+  box-shadow:
+    0 20px 40px -15px rgba(99, 102, 241, 0.6),
+    0 8px 0 0 #4338ca,
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+    inset 0 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+.btn-3d:active {
+  transform: perspective(500px) translateZ(0) translateY(2px);
+  box-shadow:
+    0 5px 15px -5px rgba(99, 102, 241, 0.5),
+    0 2px 0 0 #4338ca,
+    inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Neon glow button */
+.btn-neon {
+  position: relative;
+  padding: 16px 32px;
+  font-weight: 600;
+  color: white;
+  background: transparent;
+  border: 2px solid #00d4ff;
+  border-radius: 12px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-neon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #00d4ff, #bf00ff);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-neon::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, #00d4ff, #bf00ff, #ff006e);
+  border-radius: 14px;
+  z-index: -1;
+  filter: blur(15px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-neon:hover::before {
+  opacity: 1;
+}
+
+.btn-neon:hover::after {
+  opacity: 0.7;
+}
+
+.btn-neon:hover {
+  border-color: transparent;
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+}
+
+.btn-neon span {
+  position: relative;
+  z-index: 1;
+}
+
+/* Gradient shine button */
+.btn-shine {
+  position: relative;
+  padding: 16px 32px;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-shine::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.btn-shine:hover::before {
+  left: 100%;
+}
+
+.btn-shine:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 15px 40px -10px rgba(102, 126, 234, 0.5);
+}
+
+/* ========================================
+   NEON EFFECTS
+   ======================================== */
+
+/* Neon text */
+.text-neon-blue {
+  color: #00d4ff;
+  text-shadow:
+    0 0 5px #00d4ff,
+    0 0 10px #00d4ff,
+    0 0 20px #00d4ff,
+    0 0 40px #00d4ff;
+}
+
+.text-neon-purple {
+  color: #bf00ff;
+  text-shadow:
+    0 0 5px #bf00ff,
+    0 0 10px #bf00ff,
+    0 0 20px #bf00ff,
+    0 0 40px #bf00ff;
+}
+
+.text-neon-pink {
+  color: #ff006e;
+  text-shadow:
+    0 0 5px #ff006e,
+    0 0 10px #ff006e,
+    0 0 20px #ff006e,
+    0 0 40px #ff006e;
+}
+
+/* Rainbow gradient text */
+.text-rainbow {
+  background: linear-gradient(90deg,
+    #ff006e, #ff9500, #ffea00, #00ff88, #00d4ff, #bf00ff, #ff006e);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: rainbow-flow 3s linear infinite;
+}
+
+@keyframes rainbow-flow {
+  to { background-position: 200% center; }
+}
+
+/* Gradient text */
+.text-gradient-vivid {
+  background: linear-gradient(135deg, #00d4ff 0%, #bf00ff 50%, #ff006e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ========================================
+   3D INPUT FIELDS
+   ======================================== */
+
+.input-3d {
+  width: 100%;
+  padding: 16px 20px;
+  padding-left: 50px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  color: white;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.2),
+    0 0 0 0 rgba(139, 92, 246, 0);
+}
+
+.input-3d::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.input-3d:focus {
+  outline: none;
+  border-color: #8b5cf6;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.1),
+    0 0 0 4px rgba(139, 92, 246, 0.2),
+    0 0 30px rgba(139, 92, 246, 0.2);
+}
+
+/* ========================================
+   FLOATING ELEMENTS & DECORATIONS
+   ======================================== */
+
+/* Floating orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+.orb-1 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, #6366f1 0%, transparent 70%);
+  animation: orb-float-1 15s ease-in-out infinite;
+}
+
+.orb-2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #ec4899 0%, transparent 70%);
+  animation: orb-float-2 20s ease-in-out infinite;
+}
+
+.orb-3 {
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, #00d4ff 0%, transparent 70%);
+  animation: orb-float-3 18s ease-in-out infinite;
+}
+
+@keyframes orb-float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(50px, -80px) scale(1.1); }
+  66% { transform: translate(-30px, 50px) scale(0.9); }
+}
+
+@keyframes orb-float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-60px, 40px) scale(0.95); }
+  66% { transform: translate(40px, -60px) scale(1.05); }
+}
+
+@keyframes orb-float-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(70px, 70px) scale(1.1); }
+}
+
+/* Floating particles */
+.particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: particle-rise 10s linear infinite;
+}
+
+@keyframes particle-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(100vh) scale(0);
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100vh) scale(1);
+  }
+}
+
+/* Glowing ring */
+.ring-glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border: 2px solid rgba(139, 92, 246, 0.3);
+  border-radius: 50%;
+  animation: ring-pulse 4s ease-in-out infinite;
+}
+
+@keyframes ring-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+@keyframes fade-in-up-3d {
+  from {
+    opacity: 0;
+    transform: translateY(40px) translateZ(-50px) rotateX(10deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) translateZ(0) rotateX(0);
+  }
+}
+
+@keyframes scale-in-3d {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateZ(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateZ(0);
+  }
+}
+
+@keyframes slide-in-3d {
+  from {
+    opacity: 0;
+    transform: translateX(100px) rotateY(-20deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) rotateY(0);
+  }
+}
+
+.animate-fade-in-up-3d {
+  animation: fade-in-up-3d 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.animate-scale-in-3d {
+  animation: scale-in-3d 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.animate-slide-in-3d {
+  animation: slide-in-3d 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+/* Stagger delays */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+
+/* ========================================
+   SPECIAL EFFECTS
+   ======================================== */
+
+/* Holographic effect */
+.holographic {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+.holographic::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 45%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.1) 55%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  animation: holographic-shine 3s ease-in-out infinite;
+}
+
+@keyframes holographic-shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Glass shine */
+.glass-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-shine::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 60%
+  );
+  animation: shine-move 8s linear infinite;
+}
+
+@keyframes shine-move {
+  0% { transform: translateX(-50%) translateY(-50%) rotate(0deg); }
+  100% { transform: translateX(-50%) translateY(-50%) rotate(360deg); }
+}
+
+/* ========================================
+   LOADING SPINNERS
+   ======================================== */
+
+.spinner-3d {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent, #8b5cf6);
+  animation: spin-3d 1s linear infinite;
+  position: relative;
+}
+
+.spinner-3d::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  background: #0f0f23;
+  border-radius: 50%;
+}
+
+@keyframes spin-3d {
+  to { transform: rotate(360deg); }
+}
+
+/* Bouncing dots */
+.dots-loading {
+  display: flex;
+  gap: 8px;
+}
+
+.dots-loading span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00d4ff, #bf00ff);
+  animation: dot-bounce 1.4s ease-in-out infinite;
+}
+
+.dots-loading span:nth-child(1) { animation-delay: 0s; }
+.dots-loading span:nth-child(2) { animation-delay: 0.2s; }
+.dots-loading span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dot-bounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+/* ========================================
+   TASK-SPECIFIC STYLES
+   ======================================== */
+
+/* Priority indicators */
+.priority-high {
+  background: linear-gradient(135deg, #ff006e, #ff4d94);
+  box-shadow: 0 0 20px rgba(255, 0, 110, 0.4);
+}
+
+.priority-medium {
+  background: linear-gradient(135deg, #ff9500, #ffb347);
+  box-shadow: 0 0 20px rgba(255, 149, 0, 0.4);
+}
+
+.priority-low {
+  background: linear-gradient(135deg, #00ff88, #4dffa6);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+}
+
+/* Completion celebration */
+@keyframes celebrate {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.2) rotate(-5deg); }
+  50% { transform: scale(1.1) rotate(5deg); }
+  75% { transform: scale(1.15) rotate(-3deg); }
+  100% { transform: scale(1); }
+}
+
+.task-complete-celebrate {
+  animation: celebrate 0.5s ease-out;
+}
+
+/* ========================================
+   SCROLLBAR
+   ======================================== */
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
+  border-radius: 5px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed, #9333ea);
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+
+*:focus-visible {
+  outline: 2px solid #00d4ff;
+  outline-offset: 2px;
+}
+
+::selection {
+  background: rgba(139, 92, 246, 0.4);
+  color: white;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
