@@ -113,7 +113,7 @@
 ### Stage 10: Deployment
 
 - [ ] **10.1** Deploy frontend to Vercel
-- [ ] **10.2** Deploy backend (Railway/Render/Fly.io)
+- [ ] **10.2** Deploy backend to Vercel (Serverless Functions)
 - [ ] **10.3** Update environment variables for production
 - [ ] **10.4** Test deployed application end-to-end
 - [ ] **10.5** Update README with deployment URLs

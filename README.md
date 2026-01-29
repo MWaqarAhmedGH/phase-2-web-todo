@@ -199,32 +199,35 @@ All code is generated from specifications. Manual code writing is prohibited.
 
 ## Deployment
 
-### Backend (Railway)
+Both frontend and backend are deployed to **Vercel**.
 
-1. Go to [railway.app](https://railway.app) and sign in with GitHub
-2. Create New Project → Deploy from GitHub repo
-3. Select repository, set root directory to `phase-2-web-todo/backend`
-4. Add environment variables:
-   - `DATABASE_URL` - Neon PostgreSQL connection string
-   - `BETTER_AUTH_SECRET` - Generate with `openssl rand -base64 32`
-   - `FRONTEND_URL` - Vercel URL (add after frontend deployment)
-5. Deploy and note the Railway URL
-
-### Frontend (Vercel)
+### Backend (Vercel)
 
 1. Go to [vercel.com](https://vercel.com) and sign in with GitHub
 2. Import Project → Select repository
-3. Set root directory to `phase-2-web-todo/frontend`
+3. Set root directory to `phase-2-web-todo/backend`
 4. Add environment variables:
-   - `NEXT_PUBLIC_API_URL` - Railway backend URL
+   - `DATABASE_URL` - Neon PostgreSQL connection string
+   - `BETTER_AUTH_SECRET` - Generate with `openssl rand -base64 32`
+   - `FRONTEND_URL` - Frontend Vercel URL (add after frontend deployment)
+5. Deploy and note the Backend Vercel URL
+
+### Frontend (Vercel)
+
+1. Import another Project (same repository)
+2. Set root directory to `phase-2-web-todo/frontend`
+3. Add environment variables:
+   - `NEXT_PUBLIC_API_URL` - Backend Vercel URL
    - `BETTER_AUTH_SECRET` - Same secret as backend
-   - `BETTER_AUTH_URL` - Your Vercel URL
-   - `NEXT_PUBLIC_BETTER_AUTH_URL` - Your Vercel URL
-5. Deploy
+   - `BETTER_AUTH_URL` - Your Frontend Vercel URL
+   - `NEXT_PUBLIC_BETTER_AUTH_URL` - Your Frontend Vercel URL
+4. Deploy
 
 ### Post-Deployment
 
-Update Railway `FRONTEND_URL` with your Vercel URL for CORS.
+Update Backend `FRONTEND_URL` environment variable with your Frontend Vercel URL for CORS.
+
+For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md).
 
 ---
 
@@ -233,7 +236,7 @@ Update Railway `FRONTEND_URL` with your Vercel URL for CORS.
 | Service | URL |
 |---------|-----|
 | Frontend (Vercel) | _To be added after deployment_ |
-| Backend API (Railway) | _To be added after deployment_ |
+| Backend API (Vercel) | _To be added after deployment_ |
 
 ---
 

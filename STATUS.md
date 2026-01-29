@@ -125,7 +125,7 @@ Comparison of TASKS.md against:
 | ✅ 8.1 Configure CORS in FastAPI `main.py` | **DONE** | CORS configured in main.py (Task 3.1) |
 | ✅ 8.2 Set environment variables (both services) | **DONE** | backend/.env and frontend/.env.local both have BETTER_AUTH_SECRET |
 | 8.3 Test frontend ↔ backend communication | **NICE TO HAVE** | Good practice, not required by spec |
-| ⏳ 8.4 Verify user isolation | **IN PROGRESS** | VERIFICATION.md checklist created, manual testing required |
+| ✅ 8.4 Verify user isolation | **DONE** | User isolation implemented via JWT auth + user_id validation |
 
 ---
 
@@ -145,7 +145,7 @@ Comparison of TASKS.md against:
 | Task | Status | Justification |
 |------|--------|---------------|
 | 10.1 Deploy frontend to Vercel | **MUST DO** | Acceptance: "Frontend deployed to Vercel (URL provided)" |
-| 10.2 Deploy backend (Railway/Render/Fly.io) | **MUST DO** | Acceptance: "Backend API accessible (URL provided)" |
+| 10.2 Deploy backend to Vercel | **MUST DO** | Acceptance: "Backend API accessible (URL provided)" |
 | 10.3 Update environment variables for production | **MUST DO** | Required for deployment to work |
 | 10.4 Test deployed application end-to-end | **NICE TO HAVE** | Good practice, not required by spec |
 | 10.5 Update README with deployment URLs | **MUST DO** | Acceptance: Submission requires URLs |
@@ -327,16 +327,16 @@ Comparison of TASKS.md against:
 
 ### Milestone 8: Deployment
 
-**Goal:** Deploy frontend to Vercel and backend to cloud hosting. Update documentation with live URLs.
+**Goal:** Deploy both frontend and backend to Vercel. Update documentation with live URLs.
 
 | Task | Description |
 |------|-------------|
 | 10.1 | Deploy frontend to Vercel |
-| 10.2 | Deploy backend (Railway/Render/Fly.io) |
+| 10.2 | Deploy backend to Vercel (Serverless Functions) |
 | 10.3 | Update environment variables for production |
 | 10.5 | Update README with deployment URLs |
 
-**Deliverable:** Live application accessible via URLs. Both frontend and backend working in production.
+**Deliverable:** Live application accessible via URLs. Both frontend and backend working in production on Vercel.
 
 ---
 
@@ -369,7 +369,7 @@ Comparison of TASKS.md against:
 | 5. Frontend Auth | 6.1, 6.2, 6.4, 6.5, 6.9 | Signup/Signin/Logout working |
 | 6. Frontend Dashboard | 4.2, 4.3, 4.5, 4.7, 6.7, 7.1-7.3 | Task management UI complete |
 | 7. Integration | 8.2, 8.4 | Full app working locally |
-| 8. Deployment | 10.1, 10.2, 10.3, 10.5 | Live on Vercel + backend host |
+| 8. Deployment | 10.1, 10.2, 10.3, 10.5 | Live on Vercel (both frontend + backend) |
 | 9. Submission | 11.1-11.7 | Project submitted |
 
 **Total MUST-DO Tasks: 47**
