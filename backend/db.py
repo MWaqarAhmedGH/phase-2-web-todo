@@ -9,22 +9,27 @@ from models import Task  # noqa: F401 - Required for table creation
 # Load environment variables
 load_dotenv()
 
-# Get database URL from environment
-DATABASE_URL = os.getenv("DATABASE_URL")
+# Engine will be created lazily
+_engine = None
 
-if not DATABASE_URL:
-    raise ValueError("DATABASE_URL environment variable is not set")
 
-# Create SQLModel engine
-engine = create_engine(DATABASE_URL, echo=False)
+def get_engine():
+    """Get or create database engine (lazy initialization)."""
+    global _engine
+    if _engine is None:
+        database_url = os.getenv("DATABASE_URL")
+        if not database_url:
+            raise ValueError("DATABASE_URL environment variable is not set")
+        _engine = create_engine(database_url, echo=False)
+    return _engine
 
 
 def create_db_and_tables():
     """Create all tables defined in SQLModel models."""
-    SQLModel.metadata.create_all(engine)
+    SQLModel.metadata.create_all(get_engine())
 
 
 def get_session():
     """Dependency for getting database session."""
-    with Session(engine) as session:
+    with Session(get_engine()) as session:
         yield session
