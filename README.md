@@ -190,7 +190,7 @@ All code is generated from specifications. Manual code writing is prohibited.
 | Phase | Description | Status |
 |-------|-------------|--------|
 | Phase 1 | CLI Todo | ✅ Complete |
-| Phase 2 | Web Todo | 🔄 In Progress |
+| Phase 2 | Web Todo | ✅ Complete |
 | Phase 3 | Containerized | ❌ Not Started |
 | Phase 4 | Cloud Native | ❌ Not Started |
 | Phase 5 | AI Chatbot | ❌ Not Started |
@@ -199,11 +199,11 @@ All code is generated from specifications. Manual code writing is prohibited.
 
 ## Deployment
 
-Both frontend and backend are deployed to **Vercel**.
+Both frontend and backend are deployed to **Vercel & Railway**.
 
-### Backend (Vercel)
+### Backend (Railway)
 
-1. Go to [vercel.com](https://vercel.com) and sign in with GitHub
+1. Go to [railway.com](https://railway.com) and sign in with GitHub
 2. Import Project → Select repository
 3. Set root directory to `phase-2-web-todo/backend`
 4. Add environment variables:
@@ -236,7 +236,7 @@ For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md).
 | Service | URL |
 |---------|-----|
 | Frontend (Vercel) | _To be added after deployment_ |
-| Backend API (Vercel) | _To be added after deployment_ |
+| Backend API (Railway) | _To be added after deployment_ |
 
 ---
 
