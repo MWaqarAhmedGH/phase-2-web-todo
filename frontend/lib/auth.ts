@@ -74,8 +74,8 @@ export const auth = betterAuth({
 
   // Advanced settings for production
   advanced: {
-    // Let Better Auth auto-detect secure cookies based on request
-    // Don't force useSecureCookies as it can cause issues with cookie prefix
+    // Must be true to match the __Secure- prefix on existing cookies
+    useSecureCookies: true,
   },
 });
 
