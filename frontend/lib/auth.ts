@@ -65,17 +65,6 @@ export const auth = betterAuth({
     expiresIn: 60 * 60 * 24 * 7,
     // Update session expiration on activity
     updateAge: 60 * 60 * 24,
-    // Cookie configuration for production
-    cookieCache: {
-      enabled: true,
-      maxAge: 60 * 5, // 5 minutes
-    },
-  },
-
-  // Advanced settings for production
-  advanced: {
-    // Must be true to match the __Secure- prefix on existing cookies
-    useSecureCookies: true,
   },
 });
 
