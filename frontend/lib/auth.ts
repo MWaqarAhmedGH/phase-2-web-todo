@@ -28,6 +28,12 @@ export const auth = betterAuth({
   // Base URL for auth endpoints
   baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
 
+  // Trust the host header in production (required for Vercel)
+  trustedOrigins: [
+    process.env.BETTER_AUTH_URL || "http://localhost:3000",
+    "https://phase-2-web-todo.vercel.app",
+  ],
+
   // Email/password authentication
   emailAndPassword: {
     enabled: true,
@@ -59,6 +65,17 @@ export const auth = betterAuth({
     expiresIn: 60 * 60 * 24 * 7,
     // Update session expiration on activity
     updateAge: 60 * 60 * 24,
+    // Cookie configuration for production
+    cookieCache: {
+      enabled: true,
+      maxAge: 60 * 5, // 5 minutes
+    },
+  },
+
+  // Advanced settings for production
+  advanced: {
+    // Use secure cookies in production
+    useSecureCookies: process.env.NODE_ENV === "production",
   },
 });
 
