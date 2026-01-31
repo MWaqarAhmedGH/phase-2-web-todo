@@ -26,7 +26,10 @@ const pool = new Pool({
  */
 export const auth = betterAuth({
   // PostgreSQL database for storing users and sessions
-  database: pool,
+  database: {
+    type: "postgres",
+    pool: pool,
+  },
 
   // Secret for signing JWTs - MUST match backend BETTER_AUTH_SECRET
   secret: process.env.BETTER_AUTH_SECRET,
