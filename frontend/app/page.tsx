@@ -5,21 +5,19 @@
  */
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 
 export default function Home() {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     async function checkAuth() {
       try {
         const session = await authClient.getSession();
         if (session.data?.user) {
-          router.push("/dashboard");
-          return;
+          setIsLoggedIn(true);
         }
       } catch {
         // Not authenticated
@@ -27,7 +25,7 @@ export default function Home() {
       setIsLoading(false);
     }
     checkAuth();
-  }, [router]);
+  }, []);
 
   if (isLoading) {
     return (
@@ -103,17 +101,27 @@ export default function Home() {
 
             {/* CTA Buttons */}
             <div className="space-y-4">
-              <Link href="/signup" className="block">
-                <button className="w-full btn-3d text-lg">
-                  Sign Up
-                </button>
-              </Link>
+              {isLoggedIn ? (
+                <Link href="/dashboard" className="block">
+                  <button className="w-full btn-3d text-lg">
+                    Go to Dashboard
+                  </button>
+                </Link>
+              ) : (
+                <>
+                  <Link href="/signup" className="block">
+                    <button className="w-full btn-3d text-lg">
+                      Sign Up
+                    </button>
+                  </Link>
 
-              <Link href="/signin" className="block">
-                <button className="w-full btn-neon text-lg">
-                  <span>Sign In</span>
-                </button>
-              </Link>
+                  <Link href="/signin" className="block">
+                    <button className="w-full btn-neon text-lg">
+                      <span>Sign In</span>
+                    </button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
 
