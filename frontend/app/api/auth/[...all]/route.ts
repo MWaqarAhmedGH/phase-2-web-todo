@@ -10,7 +10,8 @@
  *
  * Better Auth handles the routing internally based on the path.
  */
-// export const runtime = "nodejs";
+export const runtime = "nodejs";
+
 import { auth } from "@/lib/auth";
 import { toNextJsHandler } from "better-auth/next-js";
 

@@ -8,22 +8,25 @@
 
 import { betterAuth } from "better-auth";
 import { jwt } from "better-auth/plugins";
-import Database from "better-sqlite3";
-import path from "path";
+import { Pool } from "pg";
 
-// Create database with absolute path to ensure it's found
-const dbPath = path.join(process.cwd(), "auth.db");
-const db = new Database(dbPath);
+// Create PostgreSQL connection pool using Neon database
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
 
 /**
  * Initialize Better Auth with:
- * - SQLite database for user/session storage
+ * - PostgreSQL database for user/session storage (works on Vercel)
  * - JWT plugin for issuing tokens to send to backend API
  * - Email/password authentication
  */
 export const auth = betterAuth({
-  // SQLite database for storing users and sessions
-  database: db,
+  // PostgreSQL database for storing users and sessions
+  database: pool,
 
   // Secret for signing JWTs - MUST match backend BETTER_AUTH_SECRET
   secret: process.env.BETTER_AUTH_SECRET,
