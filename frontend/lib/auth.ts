@@ -8,24 +8,22 @@
 
 import { betterAuth } from "better-auth";
 import { jwt } from "better-auth/plugins";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { drizzle } from "drizzle-orm/neon-http";
-import { neon } from "@neondatabase/serverless";
+import { prismaAdapter } from "better-auth/adapters/prisma";
+import { PrismaClient } from "@prisma/client";
 
-// Create Neon HTTP client (works on Vercel serverless)
-const sql = neon(process.env.DATABASE_URL!);
-const db = drizzle(sql);
+// Create Prisma client (works on Vercel serverless)
+const prisma = new PrismaClient();
 
 /**
  * Initialize Better Auth with:
- * - Drizzle ORM + Neon serverless (optimized for Vercel)
+ * - Prisma ORM (battle-tested on Vercel)
  * - JWT plugin for issuing tokens to send to backend API
  * - Email/password authentication
  */
 export const auth = betterAuth({
-  // Drizzle adapter with Neon PostgreSQL
-  database: drizzleAdapter(db, {
-    provider: "pg",
+  // Prisma adapter with PostgreSQL
+  database: prismaAdapter(prisma, {
+    provider: "postgresql",
   }),
 
   // Secret for signing JWTs - MUST match backend BETTER_AUTH_SECRET
