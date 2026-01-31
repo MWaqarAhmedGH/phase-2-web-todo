@@ -8,19 +8,19 @@
 
 import { betterAuth } from "better-auth";
 import { jwt } from "better-auth/plugins";
+import { Pool } from "pg";
 
 /**
  * Initialize Better Auth with:
- * - PostgreSQL database via connection URL
+ * - PostgreSQL database via pg Pool
  * - JWT plugin for issuing tokens to send to backend API
  * - Email/password authentication
  */
 export const auth = betterAuth({
-  // PostgreSQL database using connection URL (Better Auth handles the driver)
-  database: {
-    provider: "pg",
-    url: process.env.DATABASE_URL!,
-  },
+  // PostgreSQL database using pg Pool (as per Better Auth docs)
+  database: new Pool({
+    connectionString: process.env.DATABASE_URL,
+  }),
 
   // Secret for signing JWTs - MUST match backend BETTER_AUTH_SECRET
   secret: process.env.BETTER_AUTH_SECRET,
