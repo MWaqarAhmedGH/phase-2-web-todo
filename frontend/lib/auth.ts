@@ -8,18 +8,24 @@
 
 import { betterAuth } from "better-auth";
 import { jwt } from "better-auth/plugins";
-import { Pool } from "pg";
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { drizzle } from "drizzle-orm/neon-http";
+import { neon } from "@neondatabase/serverless";
+
+// Create Neon HTTP client (works on Vercel serverless)
+const sql = neon(process.env.DATABASE_URL!);
+const db = drizzle(sql);
 
 /**
  * Initialize Better Auth with:
- * - PostgreSQL database via pg Pool
+ * - Drizzle ORM + Neon serverless (optimized for Vercel)
  * - JWT plugin for issuing tokens to send to backend API
  * - Email/password authentication
  */
 export const auth = betterAuth({
-  // PostgreSQL database using pg Pool (as per Better Auth docs)
-  database: new Pool({
-    connectionString: process.env.DATABASE_URL,
+  // Drizzle adapter with Neon PostgreSQL
+  database: drizzleAdapter(db, {
+    provider: "pg",
   }),
 
   // Secret for signing JWTs - MUST match backend BETTER_AUTH_SECRET
