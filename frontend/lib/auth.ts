@@ -8,31 +8,18 @@
 
 import { betterAuth } from "better-auth";
 import { jwt } from "better-auth/plugins";
-import { kyselyAdapter } from "better-auth/adapters/kysely";
-import { Kysely } from "kysely";
-import { NeonDialect } from "kysely-neon";
-import { neon } from "@neondatabase/serverless";
-
-// Create Neon HTTP client
-const sql = neon(process.env.DATABASE_URL!);
-
-// Create Kysely instance with Neon dialect (optimized for serverless)
-const db = new Kysely<any>({
-  dialect: new NeonDialect({
-    neon: sql,
-  }),
-});
+import { Pool } from "@neondatabase/serverless";
 
 /**
  * Initialize Better Auth with:
- * - Kysely + Neon serverless (optimized for Vercel Edge/Serverless)
+ * - Neon serverless Pool (optimized for Vercel Edge/Serverless)
  * - JWT plugin for issuing tokens to send to backend API
  * - Email/password authentication
  */
 export const auth = betterAuth({
-  // Kysely adapter with Neon dialect
-  database: kyselyAdapter(db, {
-    provider: "pg",
+  // Neon serverless Pool - drop-in replacement for pg.Pool
+  database: new Pool({
+    connectionString: process.env.DATABASE_URL,
   }),
 
   // Secret for signing JWTs - MUST match backend BETTER_AUTH_SECRET
