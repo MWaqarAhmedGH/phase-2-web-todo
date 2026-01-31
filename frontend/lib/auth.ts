@@ -8,22 +8,19 @@
 
 import { betterAuth } from "better-auth";
 import { jwt } from "better-auth/plugins";
-import { Pool } from "@neondatabase/serverless";
-
-// Create Neon serverless pool - optimized for Vercel
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
 
 /**
  * Initialize Better Auth with:
- * - Neon serverless PostgreSQL (optimized for Vercel)
+ * - PostgreSQL database via connection URL
  * - JWT plugin for issuing tokens to send to backend API
  * - Email/password authentication
  */
 export const auth = betterAuth({
-  // PostgreSQL database using Neon serverless driver
-  database: pool,
+  // PostgreSQL database using connection URL (Better Auth handles the driver)
+  database: {
+    provider: "pg",
+    url: process.env.DATABASE_URL!,
+  },
 
   // Secret for signing JWTs - MUST match backend BETTER_AUTH_SECRET
   secret: process.env.BETTER_AUTH_SECRET,
