@@ -8,22 +8,31 @@
 
 import { betterAuth } from "better-auth";
 import { jwt } from "better-auth/plugins";
-import { prismaAdapter } from "better-auth/adapters/prisma";
-import { PrismaClient } from "@prisma/client";
+import { kyselyAdapter } from "better-auth/adapters/kysely";
+import { Kysely } from "kysely";
+import { NeonDialect } from "kysely-neon";
+import { neonConfig } from "@neondatabase/serverless";
 
-// Create Prisma client (works on Vercel serverless)
-const prisma = new PrismaClient();
+// Enable fetch connection for serverless (required for Vercel)
+neonConfig.fetchConnectionCache = true;
+
+// Create Kysely instance with Neon dialect (optimized for serverless)
+const db = new Kysely<any>({
+  dialect: new NeonDialect({
+    connectionString: process.env.DATABASE_URL!,
+  }),
+});
 
 /**
  * Initialize Better Auth with:
- * - Prisma ORM (battle-tested on Vercel)
+ * - Kysely + Neon serverless (optimized for Vercel Edge/Serverless)
  * - JWT plugin for issuing tokens to send to backend API
  * - Email/password authentication
  */
 export const auth = betterAuth({
-  // Prisma adapter with PostgreSQL
-  database: prismaAdapter(prisma, {
-    provider: "postgresql",
+  // Kysely adapter with Neon dialect
+  database: kyselyAdapter(db, {
+    provider: "pg",
   }),
 
   // Secret for signing JWTs - MUST match backend BETTER_AUTH_SECRET
