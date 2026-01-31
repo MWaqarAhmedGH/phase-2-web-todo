@@ -11,15 +11,15 @@ import { jwt } from "better-auth/plugins";
 import { kyselyAdapter } from "better-auth/adapters/kysely";
 import { Kysely } from "kysely";
 import { NeonDialect } from "kysely-neon";
-import { neonConfig } from "@neondatabase/serverless";
+import { neon } from "@neondatabase/serverless";
 
-// Enable fetch connection for serverless (required for Vercel)
-neonConfig.fetchConnectionCache = true;
+// Create Neon HTTP client
+const sql = neon(process.env.DATABASE_URL!);
 
 // Create Kysely instance with Neon dialect (optimized for serverless)
 const db = new Kysely<any>({
   dialect: new NeonDialect({
-    connectionString: process.env.DATABASE_URL!,
+    neon: sql,
   }),
 });
 
