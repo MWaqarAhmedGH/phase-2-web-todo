@@ -74,8 +74,8 @@ export const auth = betterAuth({
 
   // Advanced settings for production
   advanced: {
-    // Use secure cookies in production
-    useSecureCookies: process.env.NODE_ENV === "production",
+    // Let Better Auth auto-detect secure cookies based on request
+    // Don't force useSecureCookies as it can cause issues with cookie prefix
   },
 });
 

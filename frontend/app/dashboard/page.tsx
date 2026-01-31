@@ -32,22 +32,35 @@ export default function DashboardPage() {
   useEffect(() => {
     async function checkAuth() {
       try {
+        console.log("Dashboard: Checking session...");
         const session = await authClient.getSession();
+        console.log("Dashboard: Session response:", JSON.stringify(session, null, 2));
 
-        if (session.error || !session.data?.user) {
-          setAuthError("Please sign in to continue.");
+        if (session.error) {
+          console.error("Dashboard: Session error:", session.error);
+          setAuthError(`Session error: ${session.error.message || JSON.stringify(session.error)}`);
           setPageState("unauthenticated");
-          setTimeout(() => window.location.href = "/signin", 2000);
+          setTimeout(() => window.location.href = "/signin", 3000);
           return;
         }
 
+        if (!session.data?.user) {
+          console.error("Dashboard: No user in session data");
+          setAuthError("No session found. Please sign in.");
+          setPageState("unauthenticated");
+          setTimeout(() => window.location.href = "/signin", 3000);
+          return;
+        }
+
+        console.log("Dashboard: User authenticated:", session.data.user.email);
         setUserId(session.data.user.id);
         setUserName(session.data.user.name || session.data.user.email?.split('@')[0] || 'User');
         setPageState("authenticated");
       } catch (err) {
+        console.error("Dashboard: Auth check failed:", err);
         setAuthError(err instanceof Error ? err.message : "Authentication failed");
         setPageState("unauthenticated");
-        setTimeout(() => window.location.href = "/signin", 2000);
+        setTimeout(() => window.location.href = "/signin", 3000);
       }
     }
     checkAuth();
