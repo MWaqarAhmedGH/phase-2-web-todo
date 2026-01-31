@@ -1,42 +1,11 @@
-"use client";
-
 /**
  * Landing page - Evolution of Todo App
+ * Always shows home page with Sign In & Sign Up options
  */
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
-import { authClient } from "@/lib/auth-client";
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    async function checkAuth() {
-      try {
-        const session = await authClient.getSession();
-        if (session.data?.user) {
-          setIsLoggedIn(true);
-        }
-      } catch {
-        // Not authenticated
-      }
-      setIsLoading(false);
-    }
-    checkAuth();
-  }, []);
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-cosmic flex items-center justify-center">
-        <div className="text-center">
-          <div className="spinner-3d mx-auto mb-4"></div>
-          <p className="text-white/60 animate-pulse">Loading...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-cosmic relative overflow-hidden">
@@ -101,27 +70,17 @@ export default function Home() {
 
             {/* CTA Buttons */}
             <div className="space-y-4">
-              {isLoggedIn ? (
-                <Link href="/dashboard" className="block">
-                  <button className="w-full btn-3d text-lg">
-                    Go to Dashboard
-                  </button>
-                </Link>
-              ) : (
-                <>
-                  <Link href="/signup" className="block">
-                    <button className="w-full btn-3d text-lg">
-                      Sign Up
-                    </button>
-                  </Link>
+              <Link href="/signup" className="block">
+                <button className="w-full btn-3d text-lg">
+                  Sign Up
+                </button>
+              </Link>
 
-                  <Link href="/signin" className="block">
-                    <button className="w-full btn-neon text-lg">
-                      <span>Sign In</span>
-                    </button>
-                  </Link>
-                </>
-              )}
+              <Link href="/signin" className="block">
+                <button className="w-full btn-neon text-lg">
+                  <span>Sign In</span>
+                </button>
+              </Link>
             </div>
           </div>
 
