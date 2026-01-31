@@ -14,6 +14,42 @@ export const runtime = "nodejs";
 
 import { auth } from "@/lib/auth";
 import { toNextJsHandler } from "better-auth/next-js";
+import { NextRequest, NextResponse } from "next/server";
 
-// Export handlers for all HTTP methods
-export const { GET, POST } = toNextJsHandler(auth);
+// Get the base handlers
+const handlers = toNextJsHandler(auth);
+
+// Wrap GET with error handling
+export async function GET(request: NextRequest) {
+  try {
+    return await handlers.GET(request);
+  } catch (error) {
+    console.error("Auth GET error:", error);
+    // Always return error details for debugging (remove in production later)
+    return NextResponse.json(
+      {
+        error: "Auth error",
+        message: error instanceof Error ? error.message : "Unknown error",
+        name: error instanceof Error ? error.name : undefined,
+      },
+      { status: 500 }
+    );
+  }
+}
+
+// Wrap POST with error handling
+export async function POST(request: NextRequest) {
+  try {
+    return await handlers.POST(request);
+  } catch (error) {
+    console.error("Auth POST error:", error);
+    return NextResponse.json(
+      {
+        error: "Auth error",
+        message: error instanceof Error ? error.message : "Unknown error",
+        stack: process.env.NODE_ENV === "development" ? (error instanceof Error ? error.stack : undefined) : undefined
+      },
+      { status: 500 }
+    );
+  }
+}

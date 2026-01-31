@@ -37,10 +37,18 @@ export default function DashboardPage() {
         console.log("Dashboard: Session response:", JSON.stringify(session, null, 2));
 
         if (session.error) {
-          console.error("Dashboard: Session error:", session.error);
+          console.error("Dashboard: Session error (full):", JSON.stringify(session.error, null, 2));
+          // Try to fetch the error details directly
+          try {
+            const errorRes = await fetch('/api/auth/get-session');
+            const errorBody = await errorRes.text();
+            console.error("Dashboard: Raw error response:", errorBody);
+          } catch (e) {
+            console.error("Dashboard: Could not fetch error details:", e);
+          }
           setAuthError(`Session error: ${session.error.message || JSON.stringify(session.error)}`);
           setPageState("unauthenticated");
-          setTimeout(() => window.location.href = "/signin", 3000);
+          setTimeout(() => window.location.href = "/signin", 5000);
           return;
         }
 
