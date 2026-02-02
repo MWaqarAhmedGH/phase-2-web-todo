@@ -14,6 +14,17 @@ A full-stack web todo application built with:
 
 This is Phase 2 of a 5-phase hackathon project, transforming a CLI todo app into a modern web application.
 
+# Phase II: Full-Stack Web Application
+
+This is the second phase of the Hackathon project, which involves building a full-stack web application using Next.js, FastAPI, SQLModel, and Neon DB.
+
+### **Demo and Links**
+
+* **YouTube Demo Video Presentation:** [https://youtu.be/EvqLNiHwoNU](https://youtu.be/EvqLNiHwoNU)
+* **Frontend URL:** [https://phase-2-web-todo.vercel.app](https://phase-2-web-todo.vercel.app)
+* **Backend URL:** [https://phase-2-web-todo-production.up.railway.app](https://phase-2-web-todo-production.up.railway.app)
+* **Github Repository:** [https://github.com/MWaqarAhmedGH/phase-2-web-todo.git](https://github.com/MWaqarAhmedGH/phase-2-web-todo.git)
+
 ---
 
 ## Technology Stack
